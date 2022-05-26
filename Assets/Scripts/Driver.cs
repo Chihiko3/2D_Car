@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Driver : MonoBehaviour
 {
-
+    [SerializeField] float steerSpeed = 0.5f;
+    [SerializeField] float moveSpeed = 1f;
     void Start()
     
     {
-
+        
     }
 
     void Update()
     {
-    transform.Rotate(0, 0, 0.1f);
-    transform.Translate(0,0.01f,0);
+        float steerAmount = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime;
+        float moveAmount = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        if(moveAmount < 0){
+            transform.Rotate(0, 0, steerAmount);
+        } 
+        else 
+        {
+            transform.Rotate(0, 0, -steerAmount);
+        }
+
+        transform.Translate(0,moveAmount,0);
     }
 }
