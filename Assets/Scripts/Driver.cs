@@ -14,9 +14,19 @@ public class Driver : MonoBehaviour
 
     void Update()
     {
-        float steerAmount = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime;
         float moveAmount = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
-        if(moveAmount < 0){
+
+        float steerAmount = Input.GetAxis("Horizontal") * steerSpeed * Time.deltaTime;
+
+        // cannot change direction in still
+        if(moveAmount == 0)
+        {
+            steerAmount = 0;
+        }
+
+        // direction recurrection when moving backward
+        if(moveAmount < 0)
+        {
             transform.Rotate(0, 0, steerAmount);
         } 
         else 
